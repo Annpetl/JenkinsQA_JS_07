@@ -1,6 +1,23 @@
 {
-    "SideMenuItems": ["New Item", "People", "Build History", "Manage Jenkins", "My Views"],
-    "SideMenuItemLink": ["http://localhost:8080/view/all/newJob", "http://localhost:8080/asynchPeople/",
-                         "http://localhost:8080/view/all/builds", "http://localhost:8080/manage/",
-                         "http://localhost:8080/me/my-views/view/all/"]
+  "SideMenuItemTitle": [
+    "New Item",
+    "People",
+    "Build History",
+    "Manage Jenkins",
+    "My Views"
+  ],
+  "SideMenuItemEndpoint": [
+    "/view/all/newJob",
+    "/asynchPeople/",
+    "/view/all/builds",
+    "/manage",
+    "/me/my-views"
+  ],
+  "pageHeaderName": [
+    "Enter an item name",
+    "People",
+    "Build History of Jenkins ",
+    "Manage Jenkins",
+    "This folder is empty"
+  ]
 }

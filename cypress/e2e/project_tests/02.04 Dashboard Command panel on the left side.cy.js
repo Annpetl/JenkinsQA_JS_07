@@ -1,10 +1,9 @@
-import { SideMenuItems } from "../../fixtures/Project_test_data/02.04 Dashboard Command panel.json";
-import { SideMenuItemLink } from "../../fixtures/Project_test_data/02.04 Dashboard Command panel.json";
+import { SideMenuItemEndpoint, SideMenuItemTitle, pageHeaderName} from "../../fixtures/Project_test_data/02.04 Dashboard Command panel.json";
 
 const localhost = Cypress.env("local.host");
 const localport = Cypress.env("local.port");
 
-describe.skip("dashboard sidemenu items", () => {
+describe("dashboard sidemenu items", () => {
   it("dashboard sidemenu items titles", () => {
     cy.get(".jenkins-breadcrumbs__list-item")
       .realHover()
@@ -12,10 +11,10 @@ describe.skip("dashboard sidemenu items", () => {
       .click({ force: true })
       .get(".jenkins-dropdown__item")
       .should("have.length", "5")
-      .then(($els) => {
-        const a = Cypress.$.makeArray($els).map(($els) => $els.innerText);
-        console.log(a);
-        expect(a).to.eql(SideMenuItems);
+      cy.get(".jenkins-dropdown__item")
+      .each(($els,index) => {
+        const a = $els.text();
+        expect(a).to.contain(SideMenuItemTitle[index]);
       });
   });
 
@@ -83,13 +82,25 @@ describe("Verify links on the left side panel", function () {
     cy.get("a.jenkins-dropdown__item").as("SideMenuLink");
   });
 
-  SideMenuItems.forEach(function(linkname, index){
-it.only(`check ${linkname} navigation`, function () {
+  SideMenuItemTitle.forEach(function (linkname, index) {
+    it.only(`check ${linkname} navigation`, function () {
       cy.wrap(this.SideMenuLink[index]).click();
-
-      cy.url().should('contain', SideMenuItemLink[index])
+      cy.url().should("contain", SideMenuItemEndpoint[index]);
+      cy.contains(pageHeaderName[index])
     });
   });
+
+  it.only(`check sidemenu item navigation`, function () {
+
+    cy.get(this.SideMenuLink).each(($el, index) => {
+      //cy.wrap($el).should('have.text', SideMenuItemEndpoint4[index])
+      expect($el).to.have.attr('href', SideMenuItemEndpoint[index])
+    });
+  });
+
+  // it(`check sidemenu item navigation`, function () {
+  //   cy.get('a[href="newJob"]').then(($el) => {
+  //     cy.wrap($el).click();
+  //   });
+  // });
 });
-
-
